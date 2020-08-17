@@ -3,17 +3,29 @@ const Bootcamp = require("../models/Bootcamp");
 // @desc GET All Bootcamps
 // @routes GET /api/v1/bootcamps
 // @access Public
-exports.getBootcamps = (req, res, next) => {
-  res
-    .status(200)
-    .json({ name: "Raushan ", todos: "Bootcamps", hello: req.hello });
+exports.getBootcamps = async (req, res, next) => {
+  try {
+    const bootcamps = await Bootcamp.find();
+    if (!bootcamp) {
+      return res.status(400).json({ success: false });
+    }
+    res.status(200).json({ success: true, data: bootcamps });
+  } catch (error) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc GET Single Bootcamp
 // @routes GET /api/v1/bootcamps/:id
 // @access Public
-exports.getBootcamp = (req, res, next) => {
-  res.status(200).json({ name: "Raushan ", todos: "Bootcamps" });
+exports.getBootcamp = async (req, res, next) => {
+  try {
+    const bootcamp = await Bootcamp.findById(req.params.id);
+
+    res.status(200).json({ success: true, data: bootcamp });
+  } catch (error) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc Create New Bootcamps
@@ -30,7 +42,7 @@ exports.createBootcamp = async (req, res, next) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      data: error.message
+      data: error.message,
     });
   }
 };
