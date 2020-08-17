@@ -18,6 +18,7 @@ const app = express();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+app.use(express.json());
 
 //* Mount Routers
 app.use("/api/v1/bootcamps", bootcampsRouter);
