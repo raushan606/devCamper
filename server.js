@@ -15,6 +15,7 @@ connectDB();
 //* Route files
 const bootcampsRouter = require("./routes/bootcamps");
 const coursesRouter = require("./routes/courses");
+const authRouter = require("./routes/auth");
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use(fileUpload());
 app.use(express.static(path.join(__dirname, "public")));
 
 //* Mount Routers
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/bootcamps", bootcampsRouter);
 app.use("/api/v1/courses", coursesRouter);
 
